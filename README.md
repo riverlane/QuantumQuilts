@@ -1,6 +1,8 @@
 # QuantumQuilts
 
-Code for constructing code quilts and for choosing the logical representatives they are built on.
+This repository hosts most of the code required to construct codes and circuits for quantum quilts, a method of performing logical Pauli-product measurements in general codes detailed in [this](todo) paper.
+
+The machinery for, and results of, the empirical distance studies and decoding experiments can be found [here](todo). The some of the data in that repository follows data formats specified in `/construction`.
 
 | folder | package | what it does |
 |---|---|---|
@@ -18,11 +20,6 @@ Python 3.11 or later, and a Rust toolchain with `maturin` for the distance engin
     pip install -e representative_search
 
 Each folder has its own README with the commands it provides.
-
-## Data
-
-The data sets that accompany the paper (the representatives, the circuits and their distance evidence, the
-decoding results) are published separately. They read their code definitions from `construction`.
 
 ## Licence
 
