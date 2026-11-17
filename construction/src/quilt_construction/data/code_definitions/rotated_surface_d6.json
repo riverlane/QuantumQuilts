@@ -1,0 +1,108 @@
+{
+  "checks": {
+    "x": [
+      "0xfe0408103",
+      "0x02042850c",
+      "0x000020430",
+      "0x3c8102040",
+      "0xc2850a180",
+      "0x020428600",
+      "0x000020800",
+      "0x3c8103000",
+      "0xc2850c000",
+      "0x020430000",
+      "0x0c2040000",
+      "0x30a180000",
+      "0xc28600000",
+      "0x020800000",
+      "0x0c3000000",
+      "0x30c000000",
+      "0xc30000000"
+    ],
+    "z": [
+      "0x030a248a1",
+      "0x030a248a2",
+      "0x000030a24",
+      "0x000030a28",
+      "0x000000030",
+      "0xa142850c0",
+      "0x030a14300",
+      "0x000030c00",
+      "0xa14286000",
+      "0x030a18000",
+      "0x2850c0000",
+      "0xa14300000",
+      "0x030c00000",
+      "0x286000000",
+      "0xa18000000",
+      "0x0c0000000",
+      "0x300000000",
+      "0xc00000000"
+    ]
+  },
+  "code_id": "rotated_surface_d6",
+  "definition_payload_sha256": "60b100dcaedde57b1f4bed168c9c9adf95fb8613deefc013ff87a48d0005739f",
+  "distance": 6,
+  "family": "rotated-surface",
+  "logical_basis": {
+    "description": "The sole label bit pairs against the pinned dual logical string.",
+    "label_convention": "little-endian-basis-coefficients",
+    "pairing": "identity",
+    "x": [
+      "0x00000003f"
+    ],
+    "z": [
+      "0x041041041"
+    ]
+  },
+  "num_logicals": 1,
+  "num_qubits": 36,
+  "parameters": {
+    "distance": 6,
+    "layout": "row-major-d-by-d",
+    "x_logical": "top-row",
+    "z_logical": "left-column"
+  },
+  "schema": "quilt-code-definition-v2",
+  "source_checks": {
+    "x": [
+      "0xc3",
+      "0x30c",
+      "0xc30",
+      "0x6180",
+      "0x18600",
+      "0xc3000",
+      "0x30c000",
+      "0xc30000",
+      "0x6180000",
+      "0x18600000",
+      "0xc3000000",
+      "0x30c000000",
+      "0xc30000000",
+      "0x1040",
+      "0x20800",
+      "0x1040000",
+      "0x20800000"
+    ],
+    "z": [
+      "0x186",
+      "0x618",
+      "0x30c0",
+      "0xc300",
+      "0x30c00",
+      "0x186000",
+      "0x618000",
+      "0x30c0000",
+      "0xc300000",
+      "0x30c00000",
+      "0x186000000",
+      "0x618000000",
+      "0x3",
+      "0xc0000000",
+      "0xc",
+      "0x300000000",
+      "0x30",
+      "0xc00000000"
+    ]
+  }
+}

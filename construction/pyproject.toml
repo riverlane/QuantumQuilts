@@ -1,0 +1,28 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "quilt-construction"
+version = "1.0.0"
+description = "Construction of code quilts and their syndrome-extraction circuits"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "CC-BY-NC-SA-4.0"
+dependencies = ["numpy>=2", "stim>=1.15"]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[project.scripts]
+quilt-build = "quilt_construction.cli:build_quilt_main"
+quilt-build-control = "quilt_construction.cli:build_control_main"
+quilt-build-memory = "quilt_construction.cli:build_memory_main"
+quilt-import-representative = "quilt_construction.cli:import_representative_main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/quilt_construction"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

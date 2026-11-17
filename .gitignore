@@ -1,0 +1,11 @@
+# data releases live here locally and are published separately
+/data/
+
+.venv/
+target/
+__pycache__/
+.pytest_cache/
+*.egg-info/
+*.so
+.DS_Store
+scratch/
