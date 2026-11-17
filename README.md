@@ -1,4 +1,4 @@
-# QuantumQuilts
+# Quantum Quilts
 <img width="805" height="679" alt="Screenshot 2026-11-17 at 23 33 38" src="https://github.com/user-attachments/assets/ef17ae44-b056-468f-ac5d-3b143887b748" />
 
 This repository hosts most of the code required to construct codes and circuits for quantum quilts, a method of performing logical Pauli-product measurements in general codes detailed in [this](todo) paper.
