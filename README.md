@@ -1,6 +1,8 @@
 # Quantum Quilts
-<img width="402" height="340" alt="Screenshot 2026-11-17 at 23 33 38" src="https://github.com/user-attachments/assets/ef17ae44-b056-468f-ac5d-3b143887b748" />
 
+<p align="center">
+  <img width="402" height="340" alt="Screenshot 2026-11-17 at 23 33 38" src="https://github.com/user-attachments/assets/ef17ae44-b056-468f-ac5d-3b143887b748" />
+</p>
 This repository hosts most of the code required to construct codes and circuits for quantum quilts, a method of performing logical Pauli-product measurements in general codes detailed in [this](todo) paper.
 
 The machinery for, and results of, the empirical distance studies and decoding experiments can be found [here](todo). The some of the data in that repository follows data formats specified in `/construction`.
