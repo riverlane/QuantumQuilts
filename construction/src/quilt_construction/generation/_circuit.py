@@ -1941,6 +1941,7 @@ def build_circuit(
     prefer_blockwise_center_history: bool = False,
     preserve_raw_center_checks: bool = False,
     center_section_variant: int = 0,
+    compress: bool = False,
 ) -> tuple[str, dict[str, Any]]:
     refs = references(case)
     boundary = boundary_terms(case, refs)
@@ -2057,6 +2058,10 @@ def build_circuit(
         observable_labels=labels,
         detector_sectors=detector_sectors,
     )
+    if compress:
+        from ._pack import pack
+
+        noisy_text = str(pack(stim.Circuit(noisy_text))) + "\n"
     circuit = append_idle_noise(stim.Circuit(noisy_text), noise.p_idle)
     # The idle pass rewrites the circuit, so the emitted text has to come from
     # it rather than from noisy_text; otherwise every downstream check runs on
@@ -2069,6 +2074,12 @@ def build_circuit(
     )
     if samples.any() or observable_samples.any():
         raise AssertionError("noiseless generic circuit has an operational flip")
+    if compress:
+        samples, observable_samples = circuit.without_noise().compile_detector_sampler().sample(
+            256, separate_observables=True
+        )
+        if samples.any() or observable_samples.any():
+            raise AssertionError("noiseless packed circuit has an operational flip")
     dem = circuit.detector_error_model(
         decompose_errors=False, allow_gauge_detectors=False
     )

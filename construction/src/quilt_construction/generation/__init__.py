@@ -63,15 +63,6 @@ class GeneratedCircuit:
 
 
 
-# Idle-noise rate as a multiple of the physical error rate. 0.0 means qubits
-# idling in a tick are noiseless. Set it via QUILT_IDLE_NOISE_FACTOR: 1.0 is
-# the pessimistic convention in which an idling qubit depolarises at the
-# two-qubit gate rate.
-import os as _os
-
-def _idle_rate(p: float) -> float:
-    return float(p) * float(_os.environ.get("QUILT_IDLE_NOISE_FACTOR", "0.0"))
-
 def build_quilt(
     quilt: QuiltInput | str | Path,
     *,
@@ -79,6 +70,8 @@ def build_quilt(
     rounds: int | None = None,
     section_variant: int | None = None,
     preserve_raw_checks: bool | None = None,
+    idle_noise: bool = False,
+    compress: bool = False,
 ) -> GeneratedCircuit:
     """Generate a circuit from explicit, validated quilt inputs."""
 
@@ -105,11 +98,14 @@ def build_quilt(
     text, summary = _build_circuit(
         quilt.circuit_case,
         stitch_rounds=rounds,
-        noise=NoiseConfig(*([p] * 6), p_idle=_idle_rate(p)),
+        noise=NoiseConfig(*([p] * 6), p_idle=p if idle_noise else 0.0),
         prefer_blockwise_center_history=True,
         preserve_raw_center_checks=preserve_raw_checks,
         center_section_variant=section_variant,
+        compress=compress,
     )
+    summary["idle_noise"] = bool(idle_noise)
+    summary["compressed"] = bool(compress)
     summary["protocol"] = quilt.build.protocol
     summary["sec_schedule_policy"] = [
         {
@@ -128,6 +124,8 @@ def build_control(
     case_id: str | None = None,
     p: float | None = None,
     rounds: int | None = None,
+    idle_noise: bool = False,
+    compress: bool = False,
 ) -> GeneratedCircuit:
     """Generate the noninteracting memory control matched to a quilt's blocks.
 
@@ -157,11 +155,14 @@ def build_control(
     text, summary = _build_circuit(
         control_case,
         stitch_rounds=rounds - 2,
-        noise=NoiseConfig(*([p] * 6), p_idle=_idle_rate(p)),
+        noise=NoiseConfig(*([p] * 6), p_idle=p if idle_noise else 0.0),
         prefer_blockwise_center_history=True,
         preserve_raw_center_checks=True,
         center_section_variant=0,
+        compress=compress,
     )
+    summary["idle_noise"] = bool(idle_noise)
+    summary["compressed"] = bool(compress)
     summary["control_for"] = quilt.case_id
     summary["control"] = True
     return GeneratedCircuit(
@@ -177,6 +178,8 @@ def build_memory(
     rounds: int = 14,
     distance: int = 12,
     sec_schedule: str = BB_SEC_SCHEDULE_LEGACY,
+    idle_noise: bool = False,
+    compress: bool = False,
 ) -> GeneratedCircuit:
     """Generate ordinary single-block idle memory using a bundled SEC adapter.
 
@@ -237,11 +240,14 @@ def build_memory(
     text, summary = _build_circuit(
         memory_case,
         stitch_rounds=int(rounds) - 2,
-        noise=NoiseConfig(*([float(p)] * 6), p_idle=_idle_rate(float(p))),
+        noise=NoiseConfig(*([float(p)] * 6), p_idle=float(p) if idle_noise else 0.0),
         prefer_blockwise_center_history=True,
         preserve_raw_center_checks=True,
         center_section_variant=0,
+        compress=compress,
     )
+    summary["idle_noise"] = bool(idle_noise)
+    summary["compressed"] = bool(compress)
     summary["memory"] = True
     memory_block: dict[str, object] = {
         "kind": block_kind,

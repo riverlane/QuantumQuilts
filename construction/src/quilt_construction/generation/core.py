@@ -34,6 +34,8 @@ def build_quilt_files(
     stitch_rounds: int | None = None,
     section_variant: int | None = None,
     preserve_raw_checks: bool | None = None,
+    idle_noise: bool = False,
+    compress: bool = False,
 ) -> dict[str, Any]:
     """Build a validated quilt circuit and flattened DEM into ``output``."""
 
@@ -45,6 +47,8 @@ def build_quilt_files(
         rounds=stitch_rounds,
         section_variant=section_variant,
         preserve_raw_checks=preserve_raw_checks,
+        idle_noise=idle_noise,
+        compress=compress,
     )
     physical_p = (
         quilt.build.physical_error_rate if physical_p is None else float(physical_p)
@@ -90,6 +94,8 @@ def build_quilt_files(
         "sec_schedule_policy": builder_summary["sec_schedule_policy"],
         "physical_round_kinds": builder_summary["physical_round_kinds"],
         "physical_p": physical_p,
+        "idle_noise": bool(idle_noise),
+        "compressed": bool(compress),
         "stitch_rounds": stitch_rounds,
         "section_variant": section_variant,
         "preserve_raw_checks": preserve_raw_checks,
@@ -128,13 +134,15 @@ def build_control_files(
     case_id: str | None = None,
     physical_p: float | None = None,
     rounds: int | None = None,
+    idle_noise: bool = False,
+    compress: bool = False,
 ) -> dict[str, Any]:
     """Build the matched noninteracting memory control for a quilt."""
 
     if not isinstance(quilt, QuiltInput):
         quilt = load_quilt(quilt)
     generated = build_control(
-        quilt, case_id=case_id, p=physical_p, rounds=rounds
+        quilt, case_id=case_id, p=physical_p, rounds=rounds, idle_noise=idle_noise, compress=compress
     )
     circuit_bytes = generated.text.encode("utf-8")
     dem_bytes = generated.dem_text.encode("utf-8")
@@ -157,6 +165,8 @@ def build_control_files(
         "case_id": generated.case_id,
         "control_for": quilt.case_id,
         "physical_p": generated.summary["noise"]["p_sec_1q"],
+        "idle_noise": bool(idle_noise),
+        "compressed": bool(compress),
         "rounds": generated.summary["rounds"],
         "blocks": generated.summary["blocks"],
         "circuit_sha256": generated.circuit_sha256,
@@ -183,6 +193,8 @@ def build_memory_files(
     rounds: int = 14,
     distance: int = 12,
     sec_schedule: str = BB_SEC_SCHEDULE_LEGACY,
+    idle_noise: bool = False,
+    compress: bool = False,
 ) -> dict[str, Any]:
     """Build one ordinary single-block idle-memory circuit and its artifacts."""
 
@@ -193,6 +205,8 @@ def build_memory_files(
         rounds=rounds,
         distance=distance,
         sec_schedule=sec_schedule,
+        idle_noise=idle_noise,
+        compress=compress,
     )
     circuit_bytes = generated.text.encode("utf-8")
     dem_bytes = generated.dem_text.encode("utf-8")
@@ -219,6 +233,8 @@ def build_memory_files(
         "case_id": generated.case_id,
         "block": memory_block,
         "physical_p": float(physical_p),
+        "idle_noise": bool(idle_noise),
+        "compressed": bool(compress),
         "rounds": int(rounds),
         "circuit_sha256": generated.circuit_sha256,
         "dem_sha256": generated.dem_sha256,

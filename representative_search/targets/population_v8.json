@@ -487530,5 +487530,5 @@
  "population_sha256": "c7b45573c48622ae99dc5fc04125c7372b5c2d6425f3c01d84cd0dc93549c0fe",
  "schema": "quilt-rep-target-population-v8",
  "seed": 20260926,
- "note": "The full 30,000-target population: 12 cohorts of 2,500 across bb72, bb144 and bb288. Supersedes the 20,000-target population that predated bb144. Cite population_sha256, not the filename."
+ "note": "The full 30,000-target population: 12 cohorts of 2,500 across bb72, bb144 and bb288. Cite population_sha256, not the filename."
 }

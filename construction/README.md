@@ -33,6 +33,17 @@ parity of the noiseless circuit.
 
 `quilt-build-control` builds the matched control for a quilt and `quilt-build-memory` an idle memory circuit.
 
+All three build commands take two options, both off by default:
+
+| option | effect |
+|---|---|
+| `--idle-noise` | every qubit that no gate touches in a tick is depolarised at the physical error rate |
+| `--compress` | the circuit is packed into fewer ticks: every operation moves as early as it can, resets as late as they can, and no qubit's own sequence of operations changes. Detector and observable numbering is unchanged |
+
+With both, idle noise is added to the packed circuit. Packing is checked on every build: per-qubit operation
+order, the number of detectors and observables, and the absence of detector or observable flips without noise.
+`summary.json` records both settings.
+
 ## Codes
 
 `src/quilt_construction/data/code_definitions/` holds the six codes used: the bivariate bicycle codes `bb72`,
@@ -48,7 +59,7 @@ schedule of every block.
     src/quilt_construction/
         cli.py                the commands
         selected_record.py    record -> explicit quilt
-        generation/           quilt -> circuit (algebra, schedules, emission, parity checks)
+        generation/           quilt -> circuit (algebra, schedules, emission, parity checks, tick packing)
         codes.py              code definitions
         glued_basis.py        the glued inherited-centre basis of a quilt
         hashes.py             content hashes

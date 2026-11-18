@@ -51,6 +51,10 @@ def build_quilt_main(argv: list[str] | None = None) -> int:
         dest="preserve_raw_checks",
         default=None,
     )
+    parser.add_argument("--idle-noise", action="store_true",
+                        help="depolarise every qubit that no gate touches in a tick, at the physical error rate")
+    parser.add_argument("--compress", action="store_true",
+                        help="pack the circuit into fewer ticks without reordering anything on any qubit")
     args = parser.parse_args(argv)
     summary = build_quilt_files(
         args.quilt,
@@ -59,6 +63,8 @@ def build_quilt_main(argv: list[str] | None = None) -> int:
         stitch_rounds=args.rounds,
         section_variant=args.section_variant,
         preserve_raw_checks=args.preserve_raw_checks,
+        idle_noise=args.idle_noise,
+        compress=args.compress,
     )
     print(json.dumps(summary, indent=2, sort_keys=True))
     return 0
@@ -73,6 +79,10 @@ def build_control_main(argv: list[str] | None = None) -> int:
     parser.add_argument("--case-id")
     parser.add_argument("--physical-p", type=float)
     parser.add_argument("--rounds", type=int, help="total ordinary SEC rounds")
+    parser.add_argument("--idle-noise", action="store_true",
+                        help="depolarise every qubit that no gate touches in a tick, at the physical error rate")
+    parser.add_argument("--compress", action="store_true",
+                        help="pack the circuit into fewer ticks without reordering anything on any qubit")
     args = parser.parse_args(argv)
     summary = build_control_files(
         args.quilt,
@@ -80,6 +90,8 @@ def build_control_main(argv: list[str] | None = None) -> int:
         case_id=args.case_id,
         physical_p=args.physical_p,
         rounds=args.rounds,
+        idle_noise=args.idle_noise,
+        compress=args.compress,
     )
     print(json.dumps(summary, indent=2, sort_keys=True))
     return 0
@@ -109,6 +121,10 @@ def build_memory_main(argv: list[str] | None = None) -> int:
         default=None,
         help="BB144 SEC schedule provenance (legacy direct adapter only)",
     )
+    parser.add_argument("--idle-noise", action="store_true",
+                        help="depolarise every qubit that no gate touches in a tick, at the physical error rate")
+    parser.add_argument("--compress", action="store_true",
+                        help="pack the circuit into fewer ticks without reordering anything on any qubit")
     args = parser.parse_args(argv)
     if args.source in {"bb144", "rotated-surface"}:
         summary = build_memory_files(
@@ -123,6 +139,8 @@ def build_memory_main(argv: list[str] | None = None) -> int:
                 if args.sec_schedule is None
                 else args.sec_schedule
             ),
+            idle_noise=args.idle_noise,
+            compress=args.compress,
         )
     else:
         if any(
