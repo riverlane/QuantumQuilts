@@ -5,7 +5,7 @@
 </p>
 This repository hosts most of the code required to construct codes and circuits for quantum quilts, a method of performing logical Pauli-product measurements in general codes detailed in [this](todo) paper.
 
-The machinery for, and results of, the empirical distance studies and decoding experiments can be found [here](todo). The some of the data in that repository follows data formats specified in `/construction`.
+The machinery for, and results of, the empirical distance studies and decoding experiments can be found [on Zenodo](https://zenodo.org/records/24353700). The some of the data in that repository follows data formats specified in `/construction`.
 
 | folder | package | what it does |
 |---|---|---|
