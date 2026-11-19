@@ -12,7 +12,6 @@ The machinery for, and results of, the empirical distance studies and decoding e
 | `construction/` | `quilt_construction` | builds a quilt, and its syndrome-extraction circuit, from a representative record |
 | `representative_search/` | `quilt_rep_search` | searches for representatives and pairings, and tests the resulting quilts for operators below the code distance; contains the randomised distance engine `crates/qdist` |
 
-`representative_search` depends on `construction`; `construction` depends on nothing else here.
 
 ## Install
 
